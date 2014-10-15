@@ -39,4 +39,6 @@ public class JoinReducer extends Reducer<Text, Text, Text, Text> {
             context.write(key, new Text(out.substring(0, out.length() - 2)));
         }
     }
+    
+    // output: (word, pos:12 neg:10::1001,pos::1003,neg)
 }

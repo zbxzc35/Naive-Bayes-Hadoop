@@ -29,12 +29,6 @@ public class Main extends Configured implements Tool {
     public static final String VOCABULARY_SIZE = "com.hackecho.hadoop.nb.vocabulary_size";
     public static final String UNIQUE_LABELS = "com.hackecho.hadoop.nb.unique_labels";
 
-    /**
-     * Deletes the specified path from HDFS so we can run this multiple times.
-     * 
-     * @param conf
-     * @param path
-     */
     public static void delete(Configuration conf, Path path) throws IOException {
         FileSystem fs = path.getFileSystem(conf);
         if (fs.exists(path)) {
@@ -200,7 +194,7 @@ public class Main extends Configured implements Tool {
         long start = new Date().getTime();
         int exitCode = ToolRunner.run(new Main(), args);
         long end = new Date().getTime();
-        System.out.println("Job took "+(end-start) + "milliseconds");
+        System.out.println("Job took "+ (end - start) + " milliseconds");
         System.exit(exitCode);
     }
 }
