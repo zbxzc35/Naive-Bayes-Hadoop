@@ -1,24 +1,16 @@
 package com.hackecho.hadoop.nb;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
+import java.util.Date;
 
 import org.apache.hadoop.conf.Configuration;
 import org.apache.hadoop.conf.Configured;
-import org.apache.hadoop.filecache.DistributedCache;
-import org.apache.hadoop.fs.FSDataInputStream;
-import org.apache.hadoop.fs.FileStatus;
 import org.apache.hadoop.fs.FileSystem;
 import org.apache.hadoop.fs.Path;
-import org.apache.hadoop.io.IOUtils;
 import org.apache.hadoop.io.IntWritable;
-import org.apache.hadoop.io.LongWritable;
 import org.apache.hadoop.io.Text;
 import org.apache.hadoop.mapreduce.Job;
 import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.KeyValueTextInputFormat;
-import org.apache.hadoop.mapreduce.lib.input.MultipleInputs;
 import org.apache.hadoop.mapreduce.lib.input.TextInputFormat;
 import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 import org.apache.hadoop.mapreduce.lib.output.TextOutputFormat;
@@ -58,7 +50,7 @@ public class Main extends Configured implements Tool {
         Path traindata = new Path(conf.get("train"));
         Path testdata = new Path(conf.get("test"));
         Path output = new Path(conf.get("output"));
-        int numReducers = conf.getInt("reducers", 5);
+        //int numReducers = conf.getInt("reducers", 5);
         Path distCache = new Path(output.getParent(), "cache");
         Path model = new Path(output.getParent(), "model");
         Path joined = new Path(output.getParent(), "joined");
@@ -67,7 +59,7 @@ public class Main extends Configured implements Tool {
         Main.delete(conf, model);
         Job trainWordJob = new Job(conf, "nb-wordtrain");
         trainWordJob.setJarByClass(Main.class);
-        trainWordJob.setNumReduceTasks(numReducers);
+        //trainWordJob.setNumReduceTasks(numReducers);
         trainWordJob.setMapperClass(WordMapper.class);
         trainWordJob.setReducerClass(WordReducer.class);
 
@@ -94,7 +86,7 @@ public class Main extends Configured implements Tool {
         Main.delete(conf, distCache);
         Job trainLabelJob = new Job(conf, "nb-labeltrain");
         trainLabelJob.setJarByClass(Main.class);
-        trainLabelJob.setNumReduceTasks(numReducers);
+        //trainLabelJob.setNumReduceTasks(numReducers);
         trainLabelJob.setMapperClass(LabelMapper.class);
         trainLabelJob.setReducerClass(LabelReducer.class);
 
@@ -113,7 +105,8 @@ public class Main extends Configured implements Tool {
             System.err.println("ERROR: Label training failed!");
             return 1;
         }
-
+        
+        /**
         classifyConf.setLong(Main.UNIQUE_LABELS, trainLabelJob.getCounters()
                 .findCounter(Main.NB_COUNTERS.UNIQUE_LABELS).getValue());
         classifyConf.setLong(Main.TOTAL_DOCS, trainLabelJob.getCounters().findCounter(Main.NB_COUNTERS.TOTAL_DOCS)
@@ -141,7 +134,9 @@ public class Main extends Configured implements Tool {
             System.err.println("ERROR: Joining failed!");
             return 1;
         }
-
+        **/
+        
+        /**
         // Job 3: Classification!
         Main.delete(classifyConf, output);
 
@@ -196,11 +191,16 @@ public class Main extends Configured implements Tool {
 
         System.out.println(String.format("%s/%s, accuracy %.2f", correct, total,
                 ((double) correct / (double) total) * 100.0));
+        **/
+        System.out.println("Done!");
         return 0;
     }
 
     public static void main(String[] args) throws Exception {
+        long start = new Date().getTime();
         int exitCode = ToolRunner.run(new Main(), args);
+        long end = new Date().getTime();
+        System.out.println("Job took "+(end-start) + "milliseconds");
         System.exit(exitCode);
     }
 }
