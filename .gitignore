@@ -19,5 +19,5 @@ hs_err_pid*
 bin/
 
 # My own
-.csv
-.arff
+*.csv
+*.arff
