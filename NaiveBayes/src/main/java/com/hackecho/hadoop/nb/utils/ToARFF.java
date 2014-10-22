@@ -6,34 +6,16 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Date;
 
-public class Utils {
+// convert the training.csv file to an arff file
 
-    /**
-     * Pre-process the tweet
-     * 
-     * @author: Zhaoyu
-     * @param tweet
-     * @return
-     */
-    public static String preProcessTweet(String tweet) {
-        return tweet.replaceAll("((www\\.[\\s]+)|(https?://[^\\s]+))", "").replaceAll("@[^\\s]+", "")
-                .replaceAll("#([^\\s]+)", "\1").replace('"', ' ').replaceAll("[0-9][a-zA-Z0-9]*", "").replace(',', ' ')
-                .replace('.', ' ').replace('!', ' ').replace('?', ' ').replace(':', ' ').replace('*', ' ')
-                .replace('\'', ' ').replace('-', ' ').replace('\\', ' ').replaceAll("&quot;", " ").trim();
-    }
+public class ToARFF {
 
-    /**
-     * 
-     * convert the training.csv file to an arff file
-     * 
-     * @author Zhaoyu
-     * @param inputFileName
-     * @param outputFileName
-     */
-    public static void convertToARFF(String inputFileName, String outputFileName) {
-        // String inputFileName = "training.csv";
-        // String outputFileName = "training.arff";
+    public static void main(String[] args) {
+        long start = new Date().getTime();
+        String inputFileName = "training.csv";
+        String outputFileName = "training.arff";
         String line = null;
         try {
             FileReader fileReader = new FileReader(inputFileName);
@@ -49,7 +31,10 @@ public class Utils {
                 } else {
                     temp = "neg";
                 }
-                line = preProcessTweet(line);
+                line = line.replaceAll("((www\\.[\\s]+)|(https?://[^\\s]+))", "").replaceAll("@[^\\s]+", "")
+                        .replaceAll("#([^\\s]+)", "\1").replace('"', ' ').replaceAll("[0-9][a-zA-Z0-9]*", "")
+                        .replace(',', ' ').replace('.', ' ').replace('!', ' ').replace('?', ' ').replace(':', ' ')
+                        .replace('*', ' ').replace('\'', ' ').replace('-', ' ').replaceAll("&quot;", " ").trim();
                 String str = "\"" + line + "\"," + temp + "\n";
                 bufferedWriter.write(str);
                 bufferedWriter.flush();
@@ -61,6 +46,8 @@ public class Utils {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
-        System.out.println("The convertion is done!");
+        System.out.println("Done!");
+        long end = new Date().getTime();
+        System.out.println("The convertion took " + (end - start) + " milliseconds");
     }
 }
