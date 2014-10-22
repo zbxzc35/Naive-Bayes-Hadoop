@@ -17,8 +17,16 @@ public class SequentialNB {
 
     public static void main(String[] args) {
         long start = new Date().getTime();
-        String inputFileName = "training.csv";
-        String outputFileName = "training.arff";
+        if (args.length != 2) {
+            System.out.println("Usage: input output");
+            return;
+        }
+        
+        String inputFileName = args[0];
+        String outputFileName = args[1];
+        
+        //String inputFileName = "/Users/zl/Documents/data/training_0.5.csv";
+        //String outputFileName = "/Users/zl/Documents/data/training_0.5.arff";
 
         Utils.convertToARFF(inputFileName, outputFileName);
 
