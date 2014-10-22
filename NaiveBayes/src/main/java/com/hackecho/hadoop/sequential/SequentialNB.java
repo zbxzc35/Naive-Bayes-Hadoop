@@ -48,7 +48,7 @@ public class SequentialNB {
                 modelIn.close();
             }
             // Training
-            System.out.println("===> Start training...");
+            System.out.println("===> Start training... (filename: " + outputFileName);
             FileReader fr = new FileReader(outputFileName);
             BufferedReader br = new BufferedReader(fr);
             data = new Instances(br);
