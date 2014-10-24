@@ -13,7 +13,7 @@ public class WordReducer extends Reducer<Text, Text, Text, Text> {
             IOException {
 
         // Update the counter of the size of the vocabulary.
-        context.getCounter(Main.NB_COUNTERS.VOCABULARY_SIZE).increment(1);
+        // context.getCounter(Main.NB_COUNTERS.VOCABULARY_SIZE).increment(1);
 
         // Loop through the labels.
         HashMap<String, Integer> counts = new HashMap<String, Integer>();

@@ -73,8 +73,8 @@ public class Main extends Configured implements Tool {
             return 1;
         }
 
-        classifyConf.setLong(Main.VOCABULARY_SIZE,
-                trainWordJob.getCounters().findCounter(Main.NB_COUNTERS.VOCABULARY_SIZE).getValue());
+        // classifyConf.setLong(Main.VOCABULARY_SIZE,
+        //         trainWordJob.getCounters().findCounter(Main.NB_COUNTERS.VOCABULARY_SIZE).getValue());
 
         // Job 1b: Tabulate label-based statistics.
         Main.delete(conf, distCache);

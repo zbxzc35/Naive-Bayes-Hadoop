@@ -15,13 +15,13 @@ public class LabelReducer extends Reducer<Text, IntWritable, Text, Text> {
             IOException {
 
         // get the number of unique label.
-        context.getCounter(Main.NB_COUNTERS.UNIQUE_LABELS).increment(1);
+        // context.getCounter(Main.NB_COUNTERS.UNIQUE_LABELS).increment(1);
 
         long pY = 0;
         long pYW = 0;
         for (IntWritable value : values) {
             // Increment the global counter total docs.
-            context.getCounter(Main.NB_COUNTERS.TOTAL_DOCS).increment(1);
+            // context.getCounter(Main.NB_COUNTERS.TOTAL_DOCS).increment(1);
 
             // Increment the number of documents with this label.
             pY++;
